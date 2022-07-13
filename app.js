@@ -40,6 +40,7 @@ app.use("/users", express.static("uploads/users"));
 // routes
 app.use("/", require("./routes/web-route"))
 app.use("/user", require("./routes/user-route"))
+app.use("/admin", require("./routes/admin-route"))
 app.use("/auth", require("./routes/auth-route"))
 app.use("/book", require("./routes/book-route"))
 app.use("/audiobook", require("./routes/audiobook-route"))

@@ -5,24 +5,30 @@ exports.get = async (req, res) => {
     res.send({ book: await Book.findById(req.body._id) });
 };
 
+exports.getParams = async (req, res) => {
+    res.send({ book: await Book.findById({ _id: req.params.bookId }) });
+};
+
 exports.getAll = async (req, res) => {
     res.send({ books: await Book.find() });
 };
 
 exports.add = async (req, res) => {
-    const { title, author, releaseDate } = req.body;
+    const { title, author, releaseDate , pegi, coverId, pdfId } = req.body;
     let book = await new Book({
         title,
         author,
         releaseDate,
-        coverId: req.files.cover[0].filename,
-        pdfId: req.files.pdf[0].filename
+        pegi,
+        coverId,
+        pdfId,
+     //   audioId: req.files.audio[0].filename
     }).save();
     return res.send({ message: "Book added successfully", book });
 };
 
 exports.update = async (req, res) => {
-    const { _id, title, author, releaseDate } = req.body;
+    const { _id, title, author, releaseDate, pegi, coverId, pdfId, audioId } = req.body;
     let book = await Book.findById(_id);
     if (book) {
         await book.update({
@@ -30,8 +36,10 @@ exports.update = async (req, res) => {
                 title,
                 author,
                 releaseDate,
-                coverId: req.files.cover[0].filename,
-                pdfId: req.files.pdf[0].filename
+                pegi, 
+                coverId,
+                pdfId,
+                audioId
             }
         });
         return res.send({ message: "Book updated successfully" });
@@ -45,6 +53,7 @@ exports.delete = async (req, res) => {
         .then(function (book) {
             deleteFile("./uploads/books/" + book.coverId)
             deleteFile("./uploads/books/" + book.pdfId)
+            deleteFile("./uploads/books/" + book.audio)
 
             book.remove();
 
@@ -62,6 +71,7 @@ exports.deleteAll = async (req, res) => {
 
                 deleteFile("./uploads/books/" + book.coverId)
                 deleteFile("./uploads/books/" + book.pdfId)
+                deleteFile("./uploads/books/" + book.audio)
 
                 book.remove();
             });

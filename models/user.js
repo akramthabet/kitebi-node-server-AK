@@ -7,6 +7,20 @@ const UserSchema = new mongoose.Schema(
     firstname: { type: String },
     lastname: { type: String },
     birthdate: { type: Date },
+    lib: { type: Number },
+    way_signup: { type: Number },
+    region: { type: String },
+    city: { type: String },
+    reset_password_token: {
+      type: String,
+      required: false,
+    },
+    reset_password_expiration: {
+      type: String,
+      required: false,
+    },
+
+
     gender: {
       type: String,
       enum: {
@@ -14,10 +28,6 @@ const UserSchema = new mongoose.Schema(
         message: '{VALUE} is not supported'
       }
     },
-    city:{type:String},
-    region:{type:String},
-    lib: { type: Number },
-    waysignup:{type:Boolean},
     pictureId: { type: String },
     isVerified: { type: Boolean },
     favoriteBooks: [{ type: mongoose.Schema.Types.ObjectId, ref: "Book" }],

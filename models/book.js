@@ -6,7 +6,9 @@ const BookSchema = new mongoose.Schema(
         author: { type: String },
         releaseDate: { type: Date },
         coverId: { type: String },
-        pdfId: { type: String }
+        pegi: { type: Number },
+        pdfId: { type: String },
+        audioId: { type: String }
     },
     {
         timestamps: { currentTime: () => Date.now() },

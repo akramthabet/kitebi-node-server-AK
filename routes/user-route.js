@@ -2,6 +2,8 @@ const express = require("express")
 const router = express.Router()
 const userController = require("../controllers/user-controller");
 
+router.route("/one/:userId")
+    .get(userController.getParams);
 router.route("/one")
     .get(userController.get)
     .post(userController.add)

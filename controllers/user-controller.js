@@ -5,13 +5,16 @@ exports.get = async (req, res) => {
   res.send({ user: await User.findById(req.body._id) });
 };
 
+exports.getParams = async (req, res) => {
+  res.send({ user: await User.findById({ _id: req.params.userId }) });
+};
+
 exports.getAll = async (req, res) => {
   res.send({ users: await User.find() });
-  // console.log(users);
 };
 
 exports.add = async (req, res) => {
-  const { email, password, firstname, lastname, birthdate, gender, pictureId, isVerified, role } = req.body;
+  const { email, password, firstname, lastname, birthdate, gender, lib, way_signup, city, region, pictureId, isVerified, role } = req.body;
   let user = await new User({
     email,
     password: await bcrypt.hash(password, 10),
@@ -19,6 +22,10 @@ exports.add = async (req, res) => {
     lastname,
     birthdate,
     gender,
+    lib,
+    way_signup,
+    region,
+    city,
     pictureId,
     isVerified,
     role,
@@ -27,7 +34,7 @@ exports.add = async (req, res) => {
 };
 
 exports.update = async (req, res) => {
-  const { _id, email, password, firstname, lastname, birthdate, gender, pictureId, isVerified, role } = req.body;
+  const { _id, email, password, firstname, lastname, birthdate, gender, lib, city, region, pictureId, isVerified, role } = req.body;
   let user = await User.findById(_id);
   if (user) {
     await user.update({
@@ -38,6 +45,9 @@ exports.update = async (req, res) => {
         lastname,
         birthdate,
         gender,
+        lib,
+        region,
+        city,
         pictureId,
         isVerified,
         role,
